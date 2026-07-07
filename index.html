@@ -39,9 +39,25 @@
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 w-full max-w-md mx-auto relative">
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 w-full max-w-xl mx-auto relative">
         <h1 id="headerTitle" class="text-3xl font-bold text-center text-gray-800 mb-6 transition-opacity">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
-        
+
+        <div class="grid grid-cols-2 gap-2 mb-6">
+            <button id="showGeneratorBtn" class="flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold">
+                <i data-feather="home" class="mr-2 h-4 w-4"></i>
+                GERADOR
+            </button>
+            <button id="showAddPabxBtn" class="flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold">
+                <i data-feather="plus-circle" class="mr-2 h-4 w-4"></i>
+                ADICIONAR PABX
+            </button>
+        </div>
+
+        <!-- Seção de Mensagens temporárias -->
+        <div id="messageBox" class="mt-4 mb-4 p-3 rounded-md text-sm text-center hidden"></div>
+
+        <section id="generatorPage">
+
         <!-- Formulário de Entrada -->
         <div class="space-y-4">
             <!-- Novo Campo de Busca de Condomínio -->
@@ -87,9 +103,6 @@
                 GERAR DADOS
             </button>
         </div>
-        
-        <!-- Seção de Mensagens temporárias -->
-        <div id="messageBox" class="mt-4 p-3 rounded-md text-sm text-center hidden"></div>
         
         <!-- Seção de Alerta Específico (Amarelo, Persistente) -->
         <div id="warningBox" class="mt-4 p-3 rounded-md text-sm text-center bg-yellow-100 text-yellow-800 border border-yellow-200 hidden">
@@ -163,6 +176,66 @@
                 <pre id="instructionsOutput" class="text-sm text-gray-800"></pre>
             </div>
         </div>
+        </section>
+
+        <section id="addPabxPage" class="hidden space-y-4">
+            <h2 class="text-xl font-bold text-center text-gray-800">Adicionar PABX</h2>
+
+            <div>
+                <label for="newCondominioName" class="block text-sm font-medium text-gray-700">Nome do condominio</label>
+                <input type="text" id="newCondominioName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: NOVO CONDOMINIO">
+            </div>
+
+            <div>
+                <label for="newPabxUrl" class="block text-sm font-medium text-gray-700">Link do PABX</label>
+                <input type="url" id="newPabxUrl" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="https://172.17.00.3">
+            </div>
+
+            <div>
+                <label for="newDomain" class="block text-sm font-medium text-gray-700">Dominio</label>
+                <input type="text" id="newDomain" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="condominio.uf.loomy.srv.br">
+            </div>
+
+            <div>
+                <label for="newPasswordPrefix" class="block text-sm font-medium text-gray-700">Prefixo da senha ou senha fixa</label>
+                <input type="text" id="newPasswordPrefix" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: rmt@condominio">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="newPasswordLogic" class="block text-sm font-medium text-gray-700">Tipo de senha</label>
+                    <select id="newPasswordLogic" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="standard">Prefixo + bloco + apto + ponto</option>
+                        <option value="fixed">Senha fixa</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="newPontoFormat" class="block text-sm font-medium text-gray-700">Formato do ponto</label>
+                    <select id="newPontoFormat" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="normal">1 / 2</option>
+                        <option value="zero_padded">01 / 02</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="newWarningMessage" class="block text-sm font-medium text-gray-700">Alerta especial</label>
+                <input type="text" id="newWarningMessage" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Opcional">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                <button id="addPabxBtn" class="flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 font-bold">
+                    <i data-feather="save" class="mr-2 h-4 w-4"></i>
+                    SALVAR PABX
+                </button>
+                <button id="cancelAddPabxBtn" class="flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 font-bold">
+                    <i data-feather="arrow-left" class="mr-2 h-4 w-4"></i>
+                    VOLTAR
+                </button>
+            </div>
+
+            <div id="customPabxList" class="hidden pt-4 space-y-2"></div>
+        </section>
     </div>
 
     <script>
@@ -251,18 +324,25 @@
         "SAINT CHARLES":            { pabx: "https://172.17.94.3",    domain: "saintcharles.sp.loomy.srv.br",            password_prefix: "rmt@Sant@Charles2026", password_logic: "fixed"         },
         "JARDIM CAMARGOS":          { pabx: "https://172.17.95.3",    domain: "jardimcamargos.mg.loomy.srv.br",          password_prefix: "rmt@Jardim@Camargos2026",      password_logic: "fixed" },
     };
-    
+
+    const CUSTOM_CONDOMINIOS_STORAGE_KEY = 'customCondominiosConfig';
+
     // --- LÓGICA PRINCIPAL DA APLICAÇÃO ---
     window.addEventListener('DOMContentLoaded', () => {
         setupSearchableDropdown();
         feather.replace();
         addEventListeners();
+        renderCustomPabxList();
     });
-    
+
     function addEventListeners() {
         document.getElementById('gerarDadosBtn').addEventListener('click', generateData);
         document.getElementById('headerTitle').addEventListener('click', resetUI);
-    
+        document.getElementById('showGeneratorBtn').addEventListener('click', showGeneratorPage);
+        document.getElementById('showAddPabxBtn').addEventListener('click', showAddPabxPage);
+        document.getElementById('addPabxBtn').addEventListener('click', addCustomPabx);
+        document.getElementById('cancelAddPabxBtn').addEventListener('click', showGeneratorPage);
+
         document.querySelectorAll('.copy-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const targetId = event.currentTarget.dataset.target;
@@ -278,19 +358,186 @@
         });
     }
 
+    function loadCustomCondominios() {
+        try {
+            return JSON.parse(localStorage.getItem(CUSTOM_CONDOMINIOS_STORAGE_KEY)) || {};
+        } catch (err) {
+            return {};
+        }
+    }
+
+    function saveCustomCondominios(customConfig) {
+        try {
+            localStorage.setItem(CUSTOM_CONDOMINIOS_STORAGE_KEY, JSON.stringify(customConfig));
+            return true;
+        } catch (err) {
+            showMessage('Nao foi possivel salvar o PABX neste navegador.', 'error');
+            return false;
+        }
+    }
+
+    function getCondominiosConfig() {
+        return {
+            ...CONDOMINIOS_CONFIG,
+            ...loadCustomCondominios()
+        };
+    }
+
+    function normalizeCondominioName(name) {
+        return name.trim().replace(/\s+/g, ' ').toLocaleUpperCase('pt-BR');
+    }
+
+    function showGeneratorPage() {
+        document.getElementById('generatorPage').classList.remove('hidden');
+        document.getElementById('addPabxPage').classList.add('hidden');
+        document.getElementById('showGeneratorBtn').className = 'flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold';
+        document.getElementById('showAddPabxBtn').className = 'flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold';
+        feather.replace();
+    }
+
+    function showAddPabxPage() {
+        document.getElementById('generatorPage').classList.add('hidden');
+        document.getElementById('addPabxPage').classList.remove('hidden');
+        document.getElementById('showGeneratorBtn').className = 'flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold';
+        document.getElementById('showAddPabxBtn').className = 'flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold';
+        renderCustomPabxList();
+        feather.replace();
+    }
+
+    function clearAddPabxForm() {
+        document.getElementById('newCondominioName').value = '';
+        document.getElementById('newPabxUrl').value = '';
+        document.getElementById('newDomain').value = '';
+        document.getElementById('newPasswordPrefix').value = '';
+        document.getElementById('newPasswordLogic').value = 'standard';
+        document.getElementById('newPontoFormat').value = 'normal';
+        document.getElementById('newWarningMessage').value = '';
+    }
+
+    function addCustomPabx() {
+        const name = normalizeCondominioName(document.getElementById('newCondominioName').value);
+        const pabx = document.getElementById('newPabxUrl').value.trim();
+        const domain = document.getElementById('newDomain').value.trim();
+        const passwordPrefix = document.getElementById('newPasswordPrefix').value.trim();
+        const passwordLogic = document.getElementById('newPasswordLogic').value;
+        const pontoFormat = document.getElementById('newPontoFormat').value;
+        const warningMessage = document.getElementById('newWarningMessage').value.trim();
+
+        if (!name || !pabx || !domain || !passwordPrefix) {
+            showMessage('Preencha nome, link do PABX, dominio e senha.', 'error');
+            return;
+        }
+
+        if (!/^https?:\/\//i.test(pabx)) {
+            showMessage('Informe um link de PABX com http:// ou https://.', 'error');
+            return;
+        }
+
+        const customConfig = loadCustomCondominios();
+        customConfig[name] = {
+            pabx,
+            domain,
+            password_prefix: passwordPrefix,
+            password_logic: passwordLogic
+        };
+
+        if (pontoFormat === 'zero_padded') {
+            customConfig[name].ponto_format = 'zero_padded';
+        }
+
+        if (warningMessage) {
+            customConfig[name].warning_message = warningMessage;
+        }
+
+        if (!saveCustomCondominios(customConfig)) return;
+
+        document.getElementById('condominioSearch').value = name;
+        document.getElementById('condominioSelected').value = name;
+        clearAddPabxForm();
+        renderCustomPabxList();
+        showGeneratorPage();
+        showMessage('PABX adicionado a lista.', 'success');
+    }
+
+    function removeCustomPabx(name) {
+        const customConfig = loadCustomCondominios();
+        delete customConfig[name];
+
+        if (!saveCustomCondominios(customConfig)) return;
+
+        if (document.getElementById('condominioSelected').value === name) {
+            document.getElementById('condominioSearch').value = '';
+            document.getElementById('condominioSelected').value = '';
+        }
+
+        renderCustomPabxList();
+        showMessage('PABX removido da lista.', 'success');
+    }
+
+    function renderCustomPabxList() {
+        const listContainer = document.getElementById('customPabxList');
+        const customConfig = loadCustomCondominios();
+        const names = Object.keys(customConfig).sort();
+
+        listContainer.innerHTML = '';
+
+        if (names.length === 0) {
+            listContainer.classList.add('hidden');
+            return;
+        }
+
+        const title = document.createElement('label');
+        title.className = 'block text-xs font-bold text-gray-500 uppercase tracking-wider';
+        title.textContent = 'PABX adicionados';
+        listContainer.appendChild(title);
+
+        names.forEach(name => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center justify-between gap-3 bg-gray-50 border border-gray-200 rounded-md px-3 py-2';
+
+            const textWrapper = document.createElement('div');
+            textWrapper.className = 'min-w-0';
+
+            const itemName = document.createElement('p');
+            itemName.className = 'font-bold text-sm text-gray-800 truncate';
+            itemName.textContent = name;
+
+            const itemDomain = document.createElement('p');
+            itemDomain.className = 'text-xs text-gray-500 truncate';
+            itemDomain.textContent = customConfig[name].domain || '';
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'shrink-0 text-red-600 hover:text-red-800 p-1';
+            removeButton.setAttribute('aria-label', `Remover ${name}`);
+            removeButton.innerHTML = '<i data-feather="trash-2" class="h-4 w-4"></i>';
+            removeButton.addEventListener('click', () => removeCustomPabx(name));
+
+            textWrapper.appendChild(itemName);
+            textWrapper.appendChild(itemDomain);
+            item.appendChild(textWrapper);
+            item.appendChild(removeButton);
+            listContainer.appendChild(item);
+        });
+
+        listContainer.classList.remove('hidden');
+        feather.replace();
+    }
+
     // --- LÓGICA DE BUSCA DE CONDOMÍNIO (AUTOCOMPLETE) ---
     function setupSearchableDropdown() {
         const input = document.getElementById('condominioSearch');
         const list = document.getElementById('condominioList');
         const hiddenInput = document.getElementById('condominioSelected');
-        const condoNames = Object.keys(CONDOMINIOS_CONFIG).sort();
 
         // Normaliza texto para busca (remove acentos e lowercase)
         const normalize = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
         function renderList(filterText = "") {
             list.innerHTML = "";
-            const filtered = condoNames.filter(name => 
+            const condominiosConfig = getCondominiosConfig();
+            const condoNames = Object.keys(condominiosConfig).sort();
+            const filtered = condoNames.filter(name =>
                 filterText === "" || normalize(name).includes(normalize(filterText))
             );
 
@@ -332,7 +579,7 @@
             if (!input.contains(e.target) && !list.contains(e.target)) {
                 list.classList.add('hidden');
                 // Se o que está digitado não for um condomínio válido, limpa
-                if (!CONDOMINIOS_CONFIG[input.value]) {
+                if (!getCondominiosConfig()[input.value]) {
                      // Opcional: limpar input ou manter texto.
                      // Vamos manter o texto para UX, mas o hiddenInput já está vazio.
                 } else {
@@ -348,6 +595,7 @@
     }
     
     function resetUI() {
+        showGeneratorPage();
         document.getElementById('condominioSearch').value = '';
         document.getElementById('condominioSelected').value = '';
         document.getElementById('nomeCompleto').value = '';
@@ -365,7 +613,7 @@
     function showMessage(message, type = 'success') {
         const messageBox = document.getElementById('messageBox');
         messageBox.textContent = message;
-        messageBox.className = 'mt-4 p-3 rounded-md text-sm text-center'; 
+        messageBox.className = 'mt-4 mb-4 p-3 rounded-md text-sm text-center';
         if (type === 'success') {
             messageBox.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-200');
         } else {
@@ -397,18 +645,35 @@
         }
         document.body.removeChild(textArea);
     }
-    
+
+    function getWarningMessage(condominioName, config) {
+        if (config.warning_message) {
+            return config.warning_message;
+        }
+
+        if (condominioName === "CANTO DO SABIÁ") {
+            return "VALIDAR O LADO DO BLOCO (A OU B)";
+        }
+
+        if (["RESERVA BARRA FUNDA", "FONTE ROYAL", "BOSQUE DO INDAIA"].includes(condominioName)) {
+            return "OS RAMAIS DO INTERFONE INTELIGENTE TERMINAM COM 01/02";
+        }
+
+        return "";
+    }
+
     function generateData() {
         const nomeCompleto = document.getElementById('nomeCompleto').value.trim();
         const bloco = document.getElementById('bloco').value.trim();
         const apartamento = document.getElementById('apartamento').value.trim();
-        
+        const condominiosConfig = getCondominiosConfig();
+
         // Pega o valor do input hidden (seleção validada) ou tenta achar pelo texto do input
         let condominioName = document.getElementById('condominioSelected').value;
         const inputText = document.getElementById('condominioSearch').value;
-        
+
         // Fallback: se o usuário digitou o nome certinho mas não clicou, tenta achar
-        if (!condominioName && CONDOMINIOS_CONFIG[inputText]) {
+        if (!condominioName && condominiosConfig[inputText]) {
             condominioName = inputText;
         }
 
@@ -429,14 +694,14 @@
             return;
         }
     
-        const config = CONDOMINIOS_CONFIG[condominioName];
+        const config = condominiosConfig[condominioName];
         if (!config) return;
 
         // ======================================================
         // LÓGICA DO "ZERO" (ESPECÍFICA PARA RESERVA BARRA FUNDA)
         // ======================================================
         let pontoFormatted = pontoRaw;
-        if (condominioName === "RESERVA BARRA FUNDA" || condominioName === "SERRA MORENA") {
+        if (config.ponto_format === 'zero_padded' || condominioName === "RESERVA BARRA FUNDA" || condominioName === "SERRA MORENA") {
             // Se for 1 vira 01, se for 2 vira 02.
             pontoFormatted = pontoRaw.length === 1 ? `0${pontoRaw}` : pontoRaw;
         }
@@ -471,11 +736,9 @@
         }
     
         // Alertas Especiais
-        if (condominioName === "CANTO DO SABIÁ") {
-            showWarningMessage("VALIDAR O LADO DO BLOCO (A OU B)");
-        } else if (["RESERVA BARRA FUNDA", "FONTE ROYAL", "BOSQUE DO INDAIA"].includes(condominioName)) {
-            // Mantendo a mensagem original conforme solicitado, embora a lógica do zero tenha sido aplicada apenas no Reserva Barra Funda
-            showWarningMessage("OS RAMAIS DO INTERFONE INTELIGENTE TERMINAM COM 01/02");
+        const warningMessage = getWarningMessage(condominioName, config);
+        if (warningMessage) {
+            showWarningMessage(warningMessage);
         }
         
         // Formatação das Instruções Finais
