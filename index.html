@@ -3,63 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GERADOR DE DADOS DO INTERFONE INTELIGENTE</title>
-    <!-- Inclui o Tailwind CSS para um design limpo e responsivo -->
+    <title>Loomy | Gerador de Dados do Interfone</title>
+    <meta name="theme-color" content="#292c2e">
+    <link rel="icon" type="image/png" href="assets/loomy-symbol.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Ícones (Feather Icons) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Cor de fundo suave */
-        }
-        /* Para manter a formatação do texto com quebras de linha */
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: inherit; /* Herda a fonte do corpo */
-        }
-        /* Adiciona o cursor de ponteiro ao título para indicar que é clicável */
-        #headerTitle:hover {
-            cursor: pointer;
-            opacity: 0.8;
-        }
-        /* Estilo para a lista de sugestões */
-        #condominioList {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        #condominioList li:hover {
-            background-color: #ebf8ff;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 w-full max-w-xl mx-auto relative">
-        <h1 id="headerTitle" class="text-3xl font-bold text-center text-gray-800 mb-6 transition-opacity">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
+<body>
+    <main class="app-shell">
+        <header class="brand-header">
+            <div class="brand-lockup">
+                <img class="brand-logo" src="assets/loomy-logo-white.png" alt="Loomy">
+            </div>
+            <div class="brand-copy">
+                <h1 id="headerTitle">Gerador de dados do<br><span>interfone inteligente</span></h1>
+            </div>
+        </header>
 
-        <div class="grid grid-cols-2 gap-2 mb-6">
-            <button id="showGeneratorBtn" class="flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold">
-                <i data-feather="home" class="mr-2 h-4 w-4"></i>
-                GERADOR
-            </button>
-            <button id="showAddPabxBtn" class="flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold">
-                <i data-feather="plus-circle" class="mr-2 h-4 w-4"></i>
-                ADICIONAR PABX
-            </button>
-        </div>
+        <div class="workspace">
+            <nav class="tool-nav" aria-label="Ferramentas do interfone">
+                <button id="showGeneratorBtn" class="tool-tab is-active" type="button" aria-pressed="true">
+                    <span class="tool-index">01</span>
+                    <i data-feather="zap" class="h-4 w-4"></i>
+                    GERAR DADOS
+                </button>
+                <button id="showAddPabxBtn" class="tool-tab" type="button" aria-pressed="false">
+                    <span class="tool-index">02</span>
+                    <i data-feather="plus-circle" class="h-4 w-4"></i>
+                    ADICIONAR PABX
+                </button>
+            </nav>
 
-        <!-- Seção de Mensagens temporárias -->
-        <div id="messageBox" class="mt-4 mb-4 p-3 rounded-md text-sm text-center hidden"></div>
+            <div id="messageBox" class="hidden" role="status" aria-live="polite"></div>
 
-        <section id="generatorPage">
+            <section id="generatorPage">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">Acesso SIP</span>
+                        <h2>Gerar dados do morador</h2>
+                    </div>
+                    <span class="section-step">01 / 02</span>
+                </div>
 
         <!-- Formulário de Entrada -->
-        <div class="space-y-4">
+        <div class="form-stack space-y-4">
             <!-- Novo Campo de Busca de Condomínio -->
             <div class="relative">
                 <label for="condominioSearch" class="block text-sm font-medium text-gray-700">Condomínio</label>
@@ -88,12 +79,12 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Ponto</label>
-                <div class="flex space-x-4">
-                    <label class="inline-flex items-center">
+                <div class="point-options">
+                    <label class="point-option">
                         <input type="radio" name="ponto" value="1" class="form-radio text-blue-600" checked>
                         <span class="ml-2 text-gray-700">Primeiro Ponto</span>
                     </label>
-                    <label class="inline-flex items-center">
+                    <label class="point-option">
                         <input type="radio" name="ponto" value="2" class="form-radio text-blue-600">
                         <span class="ml-2 text-gray-700">Segundo Ponto</span>
                     </label>
@@ -101,6 +92,7 @@
             </div>
             <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 font-bold">
                 GERAR DADOS
+                <i data-feather="arrow-right" class="h-4 w-4"></i>
             </button>
         </div>
         
@@ -179,10 +171,16 @@
         </section>
 
         <section id="addPabxPage" class="hidden space-y-4">
-            <h2 class="text-xl font-bold text-center text-gray-800">Adicionar PABX</h2>
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">Base local</span>
+                    <h2>Adicionar novo PABX</h2>
+                </div>
+                <span class="section-step">02 / 02</span>
+            </div>
 
             <div>
-                <label for="newCondominioName" class="block text-sm font-medium text-gray-700">Nome do condominio</label>
+                <label for="newCondominioName" class="block text-sm font-medium text-gray-700">Nome do condomínio</label>
                 <input type="text" id="newCondominioName" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: NOVO CONDOMINIO">
             </div>
 
@@ -192,7 +190,7 @@
             </div>
 
             <div>
-                <label for="newDomain" class="block text-sm font-medium text-gray-700">Dominio</label>
+                <label for="newDomain" class="block text-sm font-medium text-gray-700">Domínio</label>
                 <input type="text" id="newDomain" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="condominio.uf.loomy.srv.br">
             </div>
 
@@ -236,7 +234,8 @@
 
             <div id="customPabxList" class="hidden pt-4 space-y-2"></div>
         </section>
-    </div>
+        </div>
+    </main>
 
     <script>
     // ==============================================================================
@@ -390,16 +389,20 @@
     function showGeneratorPage() {
         document.getElementById('generatorPage').classList.remove('hidden');
         document.getElementById('addPabxPage').classList.add('hidden');
-        document.getElementById('showGeneratorBtn').className = 'flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold';
-        document.getElementById('showAddPabxBtn').className = 'flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold';
+        document.getElementById('showGeneratorBtn').classList.add('is-active');
+        document.getElementById('showAddPabxBtn').classList.remove('is-active');
+        document.getElementById('showGeneratorBtn').setAttribute('aria-pressed', 'true');
+        document.getElementById('showAddPabxBtn').setAttribute('aria-pressed', 'false');
         feather.replace();
     }
 
     function showAddPabxPage() {
         document.getElementById('generatorPage').classList.add('hidden');
         document.getElementById('addPabxPage').classList.remove('hidden');
-        document.getElementById('showGeneratorBtn').className = 'flex items-center justify-center bg-gray-100 text-gray-700 py-2 px-3 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors duration-200 text-sm font-bold';
-        document.getElementById('showAddPabxBtn').className = 'flex items-center justify-center bg-blue-600 text-white py-2 px-3 rounded-md shadow-sm hover:bg-blue-700 transition-colors duration-200 text-sm font-bold';
+        document.getElementById('showGeneratorBtn').classList.remove('is-active');
+        document.getElementById('showAddPabxBtn').classList.add('is-active');
+        document.getElementById('showGeneratorBtn').setAttribute('aria-pressed', 'false');
+        document.getElementById('showAddPabxBtn').setAttribute('aria-pressed', 'true');
         renderCustomPabxList();
         feather.replace();
     }
